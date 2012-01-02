@@ -44,7 +44,7 @@ import android.widget.FrameLayout;
  * 
  * @author Team XBMC
  */
-public class GestureRemoteActivity extends Activity {
+public class GestureRemoteActivity extends AbsActionBarActivity {
 	
 	private final static String TAG = "GestureRemoteActivity";
 	

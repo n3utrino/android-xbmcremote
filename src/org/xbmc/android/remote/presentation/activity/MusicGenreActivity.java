@@ -54,7 +54,7 @@ public class MusicGenreActivity extends SlidingTabActivity  {
 	private SongListController mSongController;
 	
 	private static final int MENU_NOW_PLAYING = 201;
-	private static final int MENU_REMOTE = 202;
+	private static final int MENU_REMOTE = 303;
 	
 	private ConfigurationManager mConfigurationManager;
 	

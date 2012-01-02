@@ -23,6 +23,7 @@ package org.xbmc.android.remote.presentation.controller;
 
 import java.util.ArrayList;
 
+import android.app.ListFragment;
 import org.xbmc.android.remote.R;
 import org.xbmc.android.remote.business.ManagerFactory;
 import org.xbmc.android.remote.presentation.activity.ListActivity;
@@ -60,10 +61,18 @@ public class ActorListController extends ListController implements IController {
 	private final int mType;
 	
 	private IVideoManager mVideoManager;
+
+    private ListFragment mFragment;
 	
 	public ActorListController(int type) {
 		mType = type;
 	}
+
+    public void onCreate(Activity activity, Handler mHandler, ListFragment actorsFragment) {
+        this.onCreate(activity,mHandler,actorsFragment.getListView());
+        mList = actorsFragment.getListView();
+        mFragment = actorsFragment;
+    }
 	
 	public void onCreate(Activity activity, Handler handler, AbsListView list) {
 		
@@ -78,7 +87,7 @@ public class ActorListController extends ListController implements IController {
 				toast.show();
 			}
 			mFallbackBitmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.person_black_small);
-			setupIdleListener();
+//			setupIdleListener();
 			
 			mList.setOnKeyListener(new ListControllerOnKeyListener<Artist>());
 			switch (mType) {
@@ -102,7 +111,9 @@ public class ActorListController extends ListController implements IController {
 					public void run() {
 						if (value.size() > 0) {
 							setTitle("Movie actors (" + value.size() + ")");
-							mList.setAdapter(new ActorAdapter(mActivity, value));
+
+                            mFragment.setListAdapter(new ActorAdapter(mActivity, value));
+							//mList.setAdapter(new ActorAdapter(mActivity, value));
 						} else {
 							setTitle("Movie actors");
 							setNoDataMessage("No actors found.", R.drawable.icon_artist_dark);
@@ -127,21 +138,22 @@ public class ActorListController extends ListController implements IController {
 			case TYPE_EPISODE:
 				break;
 			}
-			mList.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					if(isLoading()) return;
-					Intent nextActivity;
-					final Actor actor = (Actor)mList.getAdapter().getItem(((OneLabelItemView)view).position);
-					nextActivity = new Intent(view.getContext(), ListActivity.class);
-					if(mType == TYPE_TVSHOW)
-						nextActivity.putExtra(ListController.EXTRA_LIST_CONTROLLER, new TvShowListController());
-					else
-						nextActivity.putExtra(ListController.EXTRA_LIST_CONTROLLER, new MovieListController());
-					nextActivity.putExtra(ListController.EXTRA_ACTOR, actor);
-					mActivity.startActivity(nextActivity);
-				}
-			});
+
 		}
+        mList.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(isLoading()) return;
+                Intent nextActivity;
+                final Actor actor = (Actor)mList.getAdapter().getItem(((OneLabelItemView)view).position);
+                nextActivity = new Intent(view.getContext(), ListActivity.class);
+                if(mType == TYPE_TVSHOW)
+                    nextActivity.putExtra(ListController.EXTRA_LIST_CONTROLLER, new TvShowListController());
+                else
+                    nextActivity.putExtra(ListController.EXTRA_LIST_CONTROLLER, new MovieListController());
+                nextActivity.putExtra(ListController.EXTRA_ACTOR, actor);
+                mActivity.startActivity(nextActivity);
+            }
+        });
 	}
 	
 	@Override
@@ -165,7 +177,7 @@ public class ActorListController extends ListController implements IController {
 			view.title = actor.name;
 			
 			if (mLoadCovers) {
-				view.getResponse().load(actor, !mPostScrollLoader.isListIdle());
+				view.getResponse().load(actor, false);
 			}
 			return view;
 		}

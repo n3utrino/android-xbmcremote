@@ -26,7 +26,8 @@ public class JewelView extends View {
 	private float mPosterAR;
 
 	private int coverWidth, coverHeight;
-	private int originalWidth, originalHeight;
+	private int originalWidth = 320;
+    private int originalHeight = 400;
 	private int totalWidth, totalHeight;
 	private int specifiedWidth = 0;
 	private int specifiedHeight = 0;
@@ -113,8 +114,10 @@ public class JewelView extends View {
 		
 		final int modeWidth = specifiedWidth > 0 ? MeasureSpec.EXACTLY : MeasureSpec.getMode(widthMeasureSpec);
 		final int modeHeight = specifiedHeight > 0 ? MeasureSpec.EXACTLY : MeasureSpec.getMode(heightMeasureSpec);
-		originalWidth = mPosterOverlay.getWidth();
-		originalHeight = mPosterOverlay.getHeight();
+        if(mPosterOverlay != null){
+		    originalWidth = mPosterOverlay.getWidth();
+		    originalHeight = mPosterOverlay.getHeight();
+        }
 		
 		if (modeHeight == modeWidth) {
 			final float canvasAR = (float)MeasureSpec.getSize(heightMeasureSpec) / (float)MeasureSpec.getSize(widthMeasureSpec);

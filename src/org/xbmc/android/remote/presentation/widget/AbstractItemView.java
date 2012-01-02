@@ -1,5 +1,6 @@
 package org.xbmc.android.remote.presentation.widget;
 
+import android.util.TypedValue;
 import org.xbmc.api.business.CoverResponse;
 import org.xbmc.api.business.IManager;
 import org.xbmc.api.type.ThumbSize;
@@ -60,18 +61,32 @@ public abstract class AbstractItemView extends View {
 		mSelection = selection;
 		
 		final float screenScale = fixedSize ? 1 : ThumbSize.SCREEN_SCALE;
-		padding = (int)(5 * ThumbSize.PIXEL_SCALE * screenScale);
-		size12 = (int)(12 * ThumbSize.PIXEL_SCALE * screenScale);
-		size18 = (int)(18 * ThumbSize.PIXEL_SCALE * screenScale);
-		size20 = (int)(20 * ThumbSize.PIXEL_SCALE * screenScale);
-		size25 = (int)(25 * ThumbSize.PIXEL_SCALE * screenScale);	
-		size35 = (int)(35 * ThumbSize.PIXEL_SCALE * screenScale);	
-		size42 = (int)(42 * ThumbSize.PIXEL_SCALE * screenScale);
-		size50 = (int)(50 * ThumbSize.PIXEL_SCALE * screenScale);
-		size55 = (int)(55 * ThumbSize.PIXEL_SCALE * screenScale);
-		size59 = (int)(59 * ThumbSize.PIXEL_SCALE * screenScale);
-		size65 = (int)(65 * ThumbSize.PIXEL_SCALE * screenScale);
-		size103 = (int)(103 * ThumbSize.PIXEL_SCALE * screenScale);		
+
+        padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,(float) 5, getResources().getDisplayMetrics());
+        size12 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,(float) 12, getResources().getDisplayMetrics());
+        size18 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,(float) 18, getResources().getDisplayMetrics());
+        size20 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,(float) 20, getResources().getDisplayMetrics());
+        size25 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,(float) 25, getResources().getDisplayMetrics());
+        size35 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,(float) 35, getResources().getDisplayMetrics());
+        size42 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,(float) 42, getResources().getDisplayMetrics());
+        size50 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,(float) 50, getResources().getDisplayMetrics());
+        size55 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,(float) 55, getResources().getDisplayMetrics());
+        size59 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,(float) 59, getResources().getDisplayMetrics());
+        size65 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,(float) 65, getResources().getDisplayMetrics());
+        size103 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,(float) 103, getResources().getDisplayMetrics());
+
+		//padding = (int)(5 * ThumbSize.PIXEL_SCALE * screenScale);
+		//size12 = (int)(12 * ThumbSize.PIXEL_SCALE * screenScale);
+		//size18 = (int)(18 * ThumbSize.PIXEL_SCALE * screenScale);
+		//size20 = (int)(20 * ThumbSize.PIXEL_SCALE * screenScale);
+		//size25 = (int)(25 * ThumbSize.PIXEL_SCALE * screenScale);
+		//size35 = (int)(35 * ThumbSize.PIXEL_SCALE * screenScale);
+//		size42 = (int)(42 * ThumbSize.PIXEL_SCALE * screenScale);
+//		size50 = (int)(50 * ThumbSize.PIXEL_SCALE * screenScale);
+//		size55 = (int)(55 * ThumbSize.PIXEL_SCALE * screenScale);
+//		size59 = (int)(59 * ThumbSize.PIXEL_SCALE * screenScale);
+//		size65 = (int)(65 * ThumbSize.PIXEL_SCALE * screenScale);
+//		size103 = (int)(103 * ThumbSize.PIXEL_SCALE * screenScale);
 	}
 	
 	public AbstractItemView(Context context, int width, Bitmap defaultCover, Drawable selection, boolean fixedSize) {

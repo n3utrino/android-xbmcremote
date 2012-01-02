@@ -21,14 +21,15 @@
 
 package org.xbmc.android.widget.slidingtabs;
 
+import android.app.*;
+import android.view.MenuItem;
+import android.widget.Toast;
 import org.xbmc.android.remote.R;
 import org.xbmc.android.remote.presentation.activity.HomeActivity;
 import org.xbmc.android.util.KeyTracker;
 import org.xbmc.android.util.OnLongPressBackKeyTracker;
 import org.xbmc.android.util.KeyTracker.Stage;
 
-import android.app.Activity;
-import android.app.ActivityGroup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Build.VERSION;
@@ -38,7 +39,7 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
-public class SlidingTabActivity extends ActivityGroup {
+public class SlidingTabActivity extends Activity {
 	
 	private SlidingTabHost mTabHost;
 	private String mDefaultTab = null;
@@ -94,38 +95,45 @@ public class SlidingTabActivity extends ActivityGroup {
 	@Override
 	protected void onRestoreInstanceState(Bundle state) {
 		super.onRestoreInstanceState(state);
-		ensureTabHost();
-		String cur = state.getString("currentTab");
-		if (cur != null) {
-			mTabHost.setCurrentTabByTag(cur);
-		}
-		if (mTabHost.getCurrentTab() < 0) {
-			if (mDefaultTab != null) {
-				mTabHost.setCurrentTabByTag(mDefaultTab);
-			} else if (mDefaultTabIndex >= 0) {
-				mTabHost.setCurrentTab(mDefaultTabIndex);
-			}
-		}
+//		ensureTabHost();
+//		String cur = state.getString("currentTab");
+//		if (cur != null) {
+//			mTabHost.setCurrentTabByTag(cur);
+//		}
+//		if (mTabHost.getCurrentTab() < 0) {
+//			if (mDefaultTab != null) {
+//				mTabHost.setCurrentTabByTag(mDefaultTab);
+//			} else if (mDefaultTabIndex >= 0) {
+//				mTabHost.setCurrentTab(mDefaultTabIndex);
+//			}
+//		}
 	}
 
-	@Override
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        ActionBar bar = getActionBar();
+        bar.setDisplayShowTitleEnabled(false);
+        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+    }
+
+    @Override
 	protected void onPostCreate(Bundle icicle) {
 		super.onPostCreate(icicle);
 
-		ensureTabHost();
+//		ensureTabHost();
 
-		if (mTabHost.getCurrentTab() == -1) {
-			mTabHost.setCurrentTab(0);
-		}
+//		if (mTabHost.getCurrentTab() == -1) {
+//			mTabHost.setCurrentTab(0);
+//		}
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		String currentTabTag = mTabHost.getCurrentTabTag();
-		if (currentTabTag != null) {
-			outState.putString("currentTab", currentTabTag);
-		}
+		outState.putInt("currentTab", getActionBar().getSelectedNavigationIndex());
 	}
 
 	/**
@@ -140,9 +148,9 @@ public class SlidingTabActivity extends ActivityGroup {
 		mTabHost = (SlidingTabHost) findViewById(R.id.slidingtabhost);
 
 		if (mTabHost == null) {
-			throw new RuntimeException("Your content must have a TabHost whose id attribute is " + "'android.R.id.tabhost'");
+//			throw new RuntimeException("Your content must have a TabHost whose id attribute is " + "'android.R.id.tabhost'");
 		}
-		mTabHost.setup(getLocalActivityManager());
+		//mTabHost.setup(getLocalActivityManager());
 	}
 
 	private void ensureTabHost() {
@@ -154,12 +162,12 @@ public class SlidingTabActivity extends ActivityGroup {
 	@Override
 	protected void onChildTitleChanged(Activity childActivity, CharSequence title) {
 		// Dorky implementation until we can have multiple activities running.
-		if (getLocalActivityManager().getCurrentActivity() == childActivity) {
-			View tabView = mTabHost.getCurrentTabView();
-			if (tabView != null && tabView instanceof TextView) {
-				((TextView) tabView).setText(title);
-			}
-		}
+//		if (getLocalActivityManager().getCurrentActivity() == childActivity) {
+//			View tabView = mTabHost.getCurrentTabView();
+//			if (tabView != null && tabView instanceof TextView) {
+//				((TextView) tabView).setText(title);
+//			}
+//		}
 	}
 
 	/**
@@ -182,6 +190,21 @@ public class SlidingTabActivity extends ActivityGroup {
 	public SlidingTabWidget getTabWidget() {
 		return mTabHost.getTabWidget();
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; go home
+                Intent intent = new Intent(this, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 	
 	public boolean onKeyLongPress(int keyCode, KeyEvent event) {
 		Intent intent = new Intent(SlidingTabActivity.this, HomeActivity.class);
@@ -201,4 +224,53 @@ public class SlidingTabActivity extends ActivityGroup {
 		boolean handled = (mKeyTracker != null)?mKeyTracker.doKeyUp(keyCode, event):false;
 		return handled || super.onKeyUp(keyCode, event);
 	}
+
+
+    public static class TabListener<T extends Fragment> implements ActionBar.TabListener {
+        private final Activity mActivity;
+        private final String mTag;
+        private final Class<T> mClass;
+        private final Bundle mArgs;
+        private Fragment mFragment;
+
+        public TabListener(Activity activity, String tag, Class<T> clz) {
+            this(activity, tag, clz, null);
+        }
+
+        public TabListener(Activity activity, String tag, Class<T> clz, Bundle args) {
+            mActivity = activity;
+            mTag = tag;
+            mClass = clz;
+            mArgs = args;
+
+            // Check to see if we already have a fragment for this tab, probably
+            // from a previously saved state.  If so, deactivate it, because our
+            // initial state is that a tab isn't shown.
+            mFragment = mActivity.getFragmentManager().findFragmentByTag(mTag);
+            if (mFragment != null && !mFragment.isDetached()) {
+                FragmentTransaction ft = mActivity.getFragmentManager().beginTransaction();
+                ft.detach(mFragment);
+                ft.commit();
+            }
+        }
+
+        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+            if (mFragment == null) {
+                mFragment = Fragment.instantiate(mActivity, mClass.getName(), mArgs);
+                ft.add(android.R.id.content, mFragment, mTag);
+            } else {
+                ft.attach(mFragment);
+            }
+        }
+
+        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+            if (mFragment != null) {
+                ft.detach(mFragment);
+            }
+        }
+
+        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+            Toast.makeText(mActivity, "Reselected!", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

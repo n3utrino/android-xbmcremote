@@ -106,10 +106,10 @@ public class FiveLabelsItemView extends AbstractItemView {
 		PAINT.setTextAlign(Align.LEFT);
 		PAINT.setFakeBoldText(false);
 		if (subtitle != null) {
-			canvas.drawText(ellipse(subtitle, width - subtitleRightWidth - size50 - (3 * padding)), size55, size42, PAINT);
+			canvas.drawText(ellipse(subtitle, width - subtitleRightWidth - size50 - (3 * padding)), posterWidth +padding, size42, PAINT);
 		}
 		if (bottomtitle != null) {
-			canvas.drawText(ellipse(bottomtitle, width - bottomrightWidth - size50 - (3 * padding)), size55, size59, PAINT);
+			canvas.drawText(ellipse(bottomtitle, width - bottomrightWidth - size50 - (3 * padding)),  posterWidth +padding, size59, PAINT);
 		}
 	}
 	
