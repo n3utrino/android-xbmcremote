@@ -244,9 +244,9 @@ public class MovieListController extends ListController implements IController {
     }
 
     private void redirectToFragment(Movie movie, int position) {
-        MovieDetailsFragment details = (MovieDetailsFragment) mActivity.getFragmentManager().findFragmentById(R.id.movieDetailsFragment);
-        if (details != null) {
-           // mFragment.getListView().setItemChecked(position,true);
+
+        if (((MoviesFragment)mFragment).isDualPane()) {
+            MovieDetailsFragment details = (MovieDetailsFragment) mActivity.getFragmentManager().findFragmentById(R.id.movieDetailsFragment);
             details.updateContent(movie);
         } else {
             Intent nextActivity = new Intent(mActivity, MovieDetailsActivity.class);

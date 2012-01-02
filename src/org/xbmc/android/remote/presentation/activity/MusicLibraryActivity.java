@@ -28,7 +28,7 @@ import org.xbmc.android.remote.presentation.controller.ArtistListController;
 import org.xbmc.android.remote.presentation.controller.FileListController;
 import org.xbmc.android.remote.presentation.controller.MusicGenreListController;
 import org.xbmc.android.remote.presentation.controller.RemoteController;
-import org.xbmc.android.widget.slidingtabs.SlidingTabActivity;
+import org.xbmc.android.widget.slidingtabs.FragmentTabActivity;
 import org.xbmc.android.widget.slidingtabs.SlidingTabHost;
 import org.xbmc.android.widget.slidingtabs.SlidingTabHost.OnTabChangeListener;
 import org.xbmc.api.business.IEventClientManager;
@@ -50,7 +50,7 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
-public class MusicLibraryActivity extends SlidingTabActivity implements ViewTreeObserver.OnGlobalLayoutListener {
+public class MusicLibraryActivity extends FragmentTabActivity implements ViewTreeObserver.OnGlobalLayoutListener {
 
 	private SlidingTabHost mTabHost;
 	private AlbumListController mAlbumController;
@@ -78,7 +78,7 @@ public class MusicLibraryActivity extends SlidingTabActivity implements ViewTree
 		FrameLayout topFrame = (FrameLayout)findViewById(android.R.id.content);
 		topFrame.setForeground(null);
 		
-		mTabHost = getTabHost();
+		//mTabHost = getTabHost();
 		
 		// add the tabs
 		mTabHost.addTab(mTabHost.newTabSpec("tab_albums", "Albums", R.drawable.st_album_on, R.drawable.st_album_off).setBigIcon(R.drawable.st_album_over).setContent(R.id.albumlist_outer_layout));

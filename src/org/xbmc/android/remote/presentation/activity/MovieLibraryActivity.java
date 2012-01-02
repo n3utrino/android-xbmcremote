@@ -32,12 +32,12 @@ import android.widget.ListView;
 import org.xbmc.android.remote.R;
 import org.xbmc.android.remote.business.ManagerFactory;
 import org.xbmc.android.remote.presentation.controller.*;
-import org.xbmc.android.widget.slidingtabs.SlidingTabActivity;
+import org.xbmc.android.widget.slidingtabs.FragmentTabActivity;
 import org.xbmc.api.business.IEventClientManager;
 import org.xbmc.api.type.MediaType;
 import org.xbmc.eventclient.ButtonCodes;
 
-public class MovieLibraryActivity extends SlidingTabActivity implements ViewTreeObserver.OnGlobalLayoutListener {
+public class MovieLibraryActivity extends FragmentTabActivity implements ViewTreeObserver.OnGlobalLayoutListener {
 
     private MovieListController mMovieController;
     private ActorListController mActorController;
@@ -254,7 +254,7 @@ public class MovieLibraryActivity extends SlidingTabActivity implements ViewTree
     @Override
     protected void onPause() {
         super.onPause();
-        mMovieController.onActivityPause();
+        //mMovieController.onActivityPause();
         mActorController.onActivityPause();
         mGenresController.onActivityPause();
         mFileController.onActivityPause();

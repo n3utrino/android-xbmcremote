@@ -34,7 +34,7 @@ import org.xbmc.api.type.ThumbSize;
 */
 public class MovieDetailsFragment extends Fragment {
 
-
+    private View mFragmentView;
     private MovieDetailsController mMovieDetailsController;
 
     private static final String NO_DATA = "-";
@@ -46,16 +46,22 @@ public class MovieDetailsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.moviedetails_fragment,container,false);
+        if(mFragmentView!= null){
+            return mFragmentView;
+        }
+
+        mFragmentView = inflater.inflate(R.layout.moviedetails_fragment,container,false);
         
-        return view;
+        return mFragmentView;
         
     }
 
     public void updateContent(Movie movie) {
 
-        View view = this.getView();
-        
+        View view = mFragmentView;
+
+        clearView();
+
         mMovieDetailsController = new MovieDetailsController(this.getActivity(), movie);
         
         ((TextView)view.findViewById(R.id.movie_title)).setText(movie.getName());
@@ -80,7 +86,17 @@ public class MovieDetailsFragment extends Fragment {
         mMovieDetailsController.loadCover((JewelView)view.findViewById(R.id.moviedetails_jewelcase));
     }
 
+    private void clearView(){
 
+        LinearLayout actorsView = (LinearLayout)this.getActivity().findViewById(R.id.moviedetails_actor_container);
+        if(actorsView != null){
+            actorsView.removeAllViews();
+        }
+        ((JewelView)this.getActivity().findViewById(R.id.moviedetails_jewelcase)).setCover(R.drawable.default_jewel);
+
+
+
+    }
 
     private static class MovieDetailsController extends AbstractController implements INotifiableController, IController {
         
@@ -147,9 +163,12 @@ public class MovieDetailsFragment extends Fragment {
                             }
                         });
                     }
-                    
+
                     if (movie.actors != null) {
                         final LayoutInflater inflater = mActivity.getLayoutInflater();
+                        
+                        LinearLayout actorsView = (LinearLayout)mActivity.findViewById(R.id.moviedetails_actor_container);
+                        actorsView.removeAllViews();
                         //int n = 0;
                         for (Actor actor : movie.actors) {
                             final View view = inflater.inflate(R.layout.actor_item, null);
@@ -180,7 +199,7 @@ public class MovieDetailsFragment extends Fragment {
                                     mActivity.startActivity(nextActivity);
                                 }
                             });
-                            dataLayout.addView(view);
+                            actorsView.addView(view);
                             //n++;
                         }
                     }

@@ -27,7 +27,7 @@ import org.xbmc.android.remote.presentation.controller.AlbumListController;
 import org.xbmc.android.remote.presentation.controller.ArtistListController;
 import org.xbmc.android.remote.presentation.controller.RemoteController;
 import org.xbmc.android.remote.presentation.controller.SongListController;
-import org.xbmc.android.widget.slidingtabs.SlidingTabActivity;
+import org.xbmc.android.widget.slidingtabs.FragmentTabActivity;
 import org.xbmc.android.widget.slidingtabs.SlidingTabHost;
 import org.xbmc.android.widget.slidingtabs.SlidingTabHost.OnTabChangeListener;
 import org.xbmc.api.business.IEventClientManager;
@@ -46,7 +46,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
-public class MusicGenreActivity extends SlidingTabActivity  {
+public class MusicGenreActivity extends FragmentTabActivity {
 
 	private SlidingTabHost mTabHost;
 	private ArtistListController mArtistController;
@@ -67,7 +67,7 @@ public class MusicGenreActivity extends SlidingTabActivity  {
 		FrameLayout topFrame = (FrameLayout)findViewById(android.R.id.content);
 		topFrame.setForeground(null);
 		
-		mTabHost = getTabHost();
+		//mTabHost = getTabHost();
 
 		mTabHost.addTab(mTabHost.newTabSpec("genretab_artists", "Artists", R.drawable.st_artist_on, R.drawable.st_artist_off).setBigIcon(R.drawable.st_artist_over).setContent(R.id.artistlist_outer_layout));
 		mTabHost.addTab(mTabHost.newTabSpec("genretab_albums", "Albums", R.drawable.st_album_on, R.drawable.st_album_off).setBigIcon(R.drawable.st_album_over).setContent(R.id.albumlist_outer_layout));

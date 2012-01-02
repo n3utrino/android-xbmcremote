@@ -10,11 +10,12 @@ import org.xbmc.android.remote.R;
 import org.xbmc.android.remote.presentation.controller.MovieListController;
 
 /**
- * Created by IntelliJ IDEA.
- * User: n3utrino
- * Date: 31.12.11
- * Time: 13:26
- * To change this template use File | Settings | File Templates.
+ * Movie list Fragment. Is aware of the details fragment and shows it if 
+ * the movieDetailsFragment placeholder is present. The Controller Calls the
+ * MovieDetailsFragment or an Activity with the MovieDetailsFragment.
+ *
+ * The movies fragment handles the actionBar menu for itself. So any action Loading the Fragment
+ * will get the correct menus.
  */
 public class MoviesFragment extends ListFragment {
 
@@ -28,6 +29,9 @@ public class MoviesFragment extends ListFragment {
     public MoviesFragment() {
     }
 
+    public boolean isDualPane() {
+        return mDualPane;
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -43,25 +47,20 @@ public class MoviesFragment extends ListFragment {
         if(mDualPane){
             MovieDetailsFragment details = (MovieDetailsFragment)
                     getFragmentManager().findFragmentById(R.id.movieDetailsFragment);
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            if(details == null){
 
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            if(details == null || !details.isVisible()){
+                //todo: is this really necessary if its not visible?
                 details = new MovieDetailsFragment();
+
 
                 ft.replace(R.id.movieDetailsFragment,details);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-
-
             } else{
                ft.show(details);
             }
             ft.commit();
         }
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -88,5 +87,18 @@ public class MoviesFragment extends ListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         controller.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onPause() {
+        controller.onActivityPause();
+        super.onPause();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        controller.onActivityResume(this.getActivity());
     }
 }

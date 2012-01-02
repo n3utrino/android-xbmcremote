@@ -136,6 +136,12 @@
                         style="@style/details_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
+                <LinearLayout
+                        android:id="@+id/moviedetails_actor_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        ></LinearLayout>
             </LinearLayout>
         </FrameLayout>
     </ScrollView>

@@ -28,7 +28,7 @@ import org.xbmc.android.remote.presentation.controller.FileListController;
 import org.xbmc.android.remote.presentation.controller.MovieGenreListController;
 import org.xbmc.android.remote.presentation.controller.RemoteController;
 import org.xbmc.android.remote.presentation.controller.TvShowListController;
-import org.xbmc.android.widget.slidingtabs.SlidingTabActivity;
+import org.xbmc.android.widget.slidingtabs.FragmentTabActivity;
 import org.xbmc.android.widget.slidingtabs.SlidingTabHost;
 import org.xbmc.android.widget.slidingtabs.SlidingTabHost.OnTabChangeListener;
 import org.xbmc.api.business.IEventClientManager;
@@ -51,7 +51,7 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
-public class TvShowLibraryActivity extends SlidingTabActivity implements ViewTreeObserver.OnGlobalLayoutListener {
+public class TvShowLibraryActivity extends FragmentTabActivity implements ViewTreeObserver.OnGlobalLayoutListener {
 
 	private SlidingTabHost mTabHost;
 	
@@ -79,7 +79,7 @@ public class TvShowLibraryActivity extends SlidingTabActivity implements ViewTre
 		FrameLayout topFrame = (FrameLayout)findViewById(android.R.id.content);
 		topFrame.setForeground(null);
 		
-		mTabHost = getTabHost();
+		//mTabHost = getTabHost();
 		
 		// add the tabs
 		mTabHost.addTab(mTabHost.newTabSpec("tab_tv", "TV Shows", R.drawable.st_tv_on, R.drawable.st_tv_off).setBigIcon(R.drawable.st_tv_over).setContent(R.id.tvshowlist_outer_layout));

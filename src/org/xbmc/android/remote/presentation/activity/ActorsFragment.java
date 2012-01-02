@@ -9,16 +9,9 @@ import android.view.MenuItem;
 import org.xbmc.android.remote.presentation.controller.ActorListController;
 import org.xbmc.android.remote.presentation.controller.MovieListController;
 
-/**
- * Created by IntelliJ IDEA.
- * User: n3utrino
- * Date: 31.12.11
- * Time: 13:26
- * To change this template use File | Settings | File Templates.
- */
 public class ActorsFragment extends ListFragment {
 
-    ActorListController controller;
+    ActorListController controller = new ActorListController(ActorListController.TYPE_MOVIE);
     Handler mHandler = new Handler();
 
     public ActorsFragment() {
@@ -35,10 +28,6 @@ public class ActorsFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (controller == null) {
-            controller = new ActorListController(ActorListController.TYPE_MOVIE);
-
-        }
         setHasOptionsMenu(true);
 
     }
