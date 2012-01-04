@@ -1,8 +1,7 @@
-package org.xbmc.android.remote.presentation.activity;
+package org.xbmc.android.remote.presentation.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.ListFragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -12,6 +11,8 @@ import android.view.*;
 import android.widget.*;
 import org.xbmc.android.remote.R;
 import org.xbmc.android.remote.business.ManagerFactory;
+import org.xbmc.android.remote.presentation.activity.ListActivity;
+import org.xbmc.android.remote.presentation.activity.NowPlayingActivity;
 import org.xbmc.android.remote.presentation.controller.AbstractController;
 import org.xbmc.android.remote.presentation.controller.IController;
 import org.xbmc.android.remote.presentation.controller.ListController;

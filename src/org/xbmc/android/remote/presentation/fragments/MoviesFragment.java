@@ -1,4 +1,4 @@
-package org.xbmc.android.remote.presentation.activity;
+package org.xbmc.android.remote.presentation.fragments;
 
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.view.*;
 import android.widget.ListView;
 import org.xbmc.android.remote.R;
+import org.xbmc.android.remote.presentation.activity.FastScrollListFragment;
+import org.xbmc.android.remote.presentation.activity.MovieDetailsFragment;
 import org.xbmc.android.remote.presentation.controller.MovieListController;
 
 /**
@@ -17,13 +19,12 @@ import org.xbmc.android.remote.presentation.controller.MovieListController;
  * The movies fragment handles the actionBar menu for itself. So any action Loading the Fragment
  * will get the correct menus.
  */
-public class MoviesFragment extends ListFragment {
+public class MoviesFragment extends FastScrollListFragment {
 
     public static final String TAG = "movies_fragment";
 
     private MovieListController controller = new MovieListController();
     private boolean mDualPane = false;
-    private View fragmentView;
     private Handler mHandler = new Handler();
 
     public MoviesFragment() {
@@ -70,13 +71,7 @@ public class MoviesFragment extends ListFragment {
 
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if(fragmentView == null){
-            fragmentView = inflater.inflate(R.layout.movielibrary_fragment,container,false);
-        }
-        return  fragmentView;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

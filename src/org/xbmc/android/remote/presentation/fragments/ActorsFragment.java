@@ -1,4 +1,4 @@
-package org.xbmc.android.remote.presentation.activity;
+package org.xbmc.android.remote.presentation.fragments;
 
 import android.app.ListFragment;
 import android.os.Bundle;
