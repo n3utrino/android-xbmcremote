@@ -28,10 +28,11 @@ import android.os.Handler;
 import android.view.*;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.FrameLayout;
-import android.widget.ListView;
 import org.xbmc.android.remote.R;
 import org.xbmc.android.remote.business.ManagerFactory;
 import org.xbmc.android.remote.presentation.controller.*;
+import org.xbmc.android.remote.presentation.fragments.ActorsFragment;
+import org.xbmc.android.remote.presentation.fragments.MoviesFragment;
 import org.xbmc.android.widget.slidingtabs.FragmentTabActivity;
 import org.xbmc.api.business.IEventClientManager;
 import org.xbmc.api.type.MediaType;
@@ -83,8 +84,6 @@ public class MovieLibraryActivity extends FragmentTabActivity implements ViewTre
         // assign the gui logic to each tab
         mHandler = new Handler();
         mMovieController = new MovieListController();
-//		mMovieController.findTitleView(findViewById(R.id.movielist_outer_layout));
-//		mMovieController.findMessageView(findViewById(R.id.movielist_outer_layout));
 
         mActorController = new ActorListController(ActorListController.TYPE_MOVIE);
         mActorController.findTitleView(findViewById(R.id.actorlist_outer_layout));
@@ -102,21 +101,6 @@ public class MovieLibraryActivity extends FragmentTabActivity implements ViewTre
     }
 
     public void onGlobalLayout() {
-    }
-
-    private void initTab(String tabId) {
-        if (tabId.equals("tab_movies")) {
-            //	mMovieController.onCreate(MovieLibraryActivity.this, mHandler, (ListView)findViewById(R.id.movielist_list));
-        }
-        if (tabId.equals("tab_actors")) {
-            mActorController.onCreate(MovieLibraryActivity.this, mHandler, (ListView) findViewById(R.id.actorlist_list));
-        }
-        if (tabId.equals("tab_genres")) {
-            mGenresController.onCreate(MovieLibraryActivity.this, mHandler, (ListView) findViewById(R.id.genrelist_list));
-        }
-        if (tabId.equals("tab_files")) {
-            mFileController.onCreate(MovieLibraryActivity.this, mHandler, (ListView) findViewById(R.id.filelist_list));
-        }
     }
 
     @Override
@@ -244,7 +228,6 @@ public class MovieLibraryActivity extends FragmentTabActivity implements ViewTre
     @Override
     protected void onResume() {
         super.onResume();
-//		mMovieController.onActivityResume(this);
         mActorController.onActivityResume(this);
         mGenresController.onActivityResume(this);
         mFileController.onActivityResume(this);
@@ -254,7 +237,6 @@ public class MovieLibraryActivity extends FragmentTabActivity implements ViewTre
     @Override
     protected void onPause() {
         super.onPause();
-        //mMovieController.onActivityPause();
         mActorController.onActivityPause();
         mGenresController.onActivityPause();
         mFileController.onActivityPause();

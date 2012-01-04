@@ -22,27 +22,18 @@
 package org.xbmc.android.remote.presentation.activity;
 
 import org.xbmc.android.remote.R;
-import org.xbmc.android.remote.business.ManagerFactory;
 import org.xbmc.android.remote.presentation.controller.ListController;
-import org.xbmc.android.remote.presentation.widget.JewelView;
+import org.xbmc.android.remote.presentation.fragments.MovieDetailsFragment;
 import org.xbmc.android.util.KeyTracker;
 import org.xbmc.android.util.KeyTracker.Stage;
 import org.xbmc.android.util.OnLongPressBackKeyTracker;
-import org.xbmc.api.business.IEventClientManager;
 import org.xbmc.api.object.Movie;
-import org.xbmc.eventclient.ButtonCodes;
 
 import android.content.Intent;
 import android.os.Build.VERSION;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class MovieDetailsActivity extends AbsActionBarActivity {
 

@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import org.xbmc.android.remote.presentation.controller.ActorListController;
 import org.xbmc.android.remote.presentation.controller.MovieListController;
 
-public class ActorsFragment extends ListFragment {
+public class ActorsFragment extends FastScrollListFragment {
 
     ActorListController controller = new ActorListController(ActorListController.TYPE_MOVIE);
     Handler mHandler = new Handler();

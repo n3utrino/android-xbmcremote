@@ -27,6 +27,9 @@ import android.app.ListFragment;
 import org.xbmc.android.remote.R;
 import org.xbmc.android.remote.business.ManagerFactory;
 import org.xbmc.android.remote.presentation.activity.ListActivity;
+import org.xbmc.android.remote.presentation.activity.MovieDetailsActivity;
+import org.xbmc.android.remote.presentation.fragments.MovieDetailsFragment;
+import org.xbmc.android.remote.presentation.fragments.MoviesFragment;
 import org.xbmc.android.remote.presentation.widget.OneLabelItemView;
 import org.xbmc.android.util.ImportUtilities;
 import org.xbmc.api.business.DataResponse;
@@ -87,7 +90,7 @@ public class ActorListController extends ListController implements IController {
 				toast.show();
 			}
 			mFallbackBitmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.person_black_small);
-//			setupIdleListener();
+			setupIdleListener();
 			
 			mList.setOnKeyListener(new ListControllerOnKeyListener<Artist>());
 			switch (mType) {
@@ -146,10 +149,11 @@ public class ActorListController extends ListController implements IController {
                 Intent nextActivity;
                 final Actor actor = (Actor)mList.getAdapter().getItem(((OneLabelItemView)view).position);
                 nextActivity = new Intent(view.getContext(), ListActivity.class);
-                if(mType == TYPE_TVSHOW)
+                if(mType == TYPE_TVSHOW){
                     nextActivity.putExtra(ListController.EXTRA_LIST_CONTROLLER, new TvShowListController());
-                else
+                }else{
                     nextActivity.putExtra(ListController.EXTRA_LIST_CONTROLLER, new MovieListController());
+                }
                 nextActivity.putExtra(ListController.EXTRA_ACTOR, actor);
                 mActivity.startActivity(nextActivity);
             }
@@ -177,8 +181,8 @@ public class ActorListController extends ListController implements IController {
 			view.title = actor.name;
 			
 			if (mLoadCovers) {
-				view.getResponse().load(actor, false);
-			}
+                view.getResponse().load(actor, !mPostScrollLoader.isListIdle());
+            }
 			return view;
 		}
 	}

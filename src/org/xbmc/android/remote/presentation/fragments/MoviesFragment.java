@@ -1,14 +1,10 @@
 package org.xbmc.android.remote.presentation.fragments;
 
 import android.app.FragmentTransaction;
-import android.app.ListFragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.*;
-import android.widget.ListView;
 import org.xbmc.android.remote.R;
-import org.xbmc.android.remote.presentation.activity.FastScrollListFragment;
-import org.xbmc.android.remote.presentation.activity.MovieDetailsFragment;
 import org.xbmc.android.remote.presentation.controller.MovieListController;
 
 /**

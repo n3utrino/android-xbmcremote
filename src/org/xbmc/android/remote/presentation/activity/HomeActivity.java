@@ -40,9 +40,11 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -79,6 +81,11 @@ public class HomeActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
+		
+		if (Build.VERSION.SDK_INT >= 9) {
+			final StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+			StrictMode.setThreadPolicy(policy);
+		}
 		
 		// set display size
 		final Display display = getWindowManager().getDefaultDisplay(); 
@@ -271,7 +278,7 @@ public class HomeActivity extends Activity {
 	}
 
 	final Handler mHandler = new Handler() {
-		public void handleMessage(Message msg) {
+		public void handleMessage(final Message msg) {
 			mHomeController.onHandleMessage(msg, mProgressDialog, mProgressThread);
 		}
 	};

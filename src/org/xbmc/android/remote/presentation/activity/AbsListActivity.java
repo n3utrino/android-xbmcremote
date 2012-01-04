@@ -86,6 +86,7 @@ public abstract class AbsListActivity extends Activity {
 			mListController.findTitleView(findViewById(R.id.blanklist_outer_layout));
 			mListController.findMessageView(findViewById(R.id.blanklist_outer_layout));
 			mListController.onCreate(this, new Handler(), (AbsListView)findViewById(R.id.blanklist_list));
+
 		}
 		mConfigurationManager = ConfigurationManager.getInstance(this);
 	}

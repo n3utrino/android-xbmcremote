@@ -138,13 +138,17 @@ public abstract class ListController extends AbstractController implements Seria
 	protected void refreshList() { }
 	
 	public void findTitleView(View parent) {
-//		mTitleView = (TextView)parent.findViewById(R.id.titlebar_text);
+        if(parent != null){
+		    mTitleView = (TextView)parent.findViewById(R.id.titlebar_text);
+        }
 	}
 	
 	public void findMessageView(View parent) {
-//		mMessageGroup = (ViewGroup)parent.findViewById(R.id.listmessage);
-//		mMessageText = (TextView)parent.findViewById(R.id.listmessage_text);
-//		mMessageGroup.setVisibility(View.GONE);
+        if(parent != null){
+		    mMessageGroup = (ViewGroup)parent.findViewById(R.id.listmessage);
+		    mMessageText = (TextView)parent.findViewById(R.id.listmessage_text);
+		    mMessageGroup.setVisibility(View.GONE);
+        }
 	}
 	
 	protected void setTitle(final String title) {

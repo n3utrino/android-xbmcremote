@@ -29,7 +29,6 @@ import org.apache.http.HttpException;
 import org.xbmc.android.remote.business.Command;
 import org.xbmc.android.remote.presentation.activity.HostSettingsActivity;
 import org.xbmc.android.remote.presentation.activity.SettingsActivity;
-import org.xbmc.android.util.ClientFactory;
 import org.xbmc.android.util.HostFactory;
 import org.xbmc.android.util.WifiHelper;
 import org.xbmc.api.business.INotifiableManager;
@@ -42,9 +41,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.util.Log;
@@ -72,7 +71,7 @@ public abstract class AbstractController {
 		mActivity = activity;
 		mHandler = handler;
 		HostFactory.readHost(activity.getApplicationContext());
-		ClientFactory.resetClient(HostFactory.host);
+		//ClientFactory.resetClient(HostFactory.host);
 	}
 	
 	public void onWrongConnectionState(int state, final INotifiableManager manager, final Command<?> source) {
